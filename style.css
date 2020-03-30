@@ -1,0 +1,181 @@
+body {
+    background: #40E0D0;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FF0080, #FF8C00, #40E0D0);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FF0080, #FF8C00, #40E0D0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100vh;
+    width: 100vw;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+#cont {
+    width: 700px;
+    max-height: 700px;
+    position: relative;
+    left: 50vw;
+    transform: translate(-50%,-50%);
+    background:transparent;
+    margin: 0px;
+    padding: 0px;
+    top: 50%;
+}
+
+#cont #halo {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    cursor:crosshair;       
+    border-radius: 10px;
+}
+
+.left-block {
+    width: 160px;
+    position: fixed;
+    top: 50%;
+    transform: translate(0,-50%);
+    left: 50px;
+}
+
+
+.brushes {
+    padding-top: 5px;
+}
+  
+.brushes button {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+    padding: 5px;
+    height: 40px;
+    border-radius: 20px;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.brushes button:after {
+    height: 1px;
+    display: block;
+    background: #333;
+    content: '';
+    width: 60%;
+    position: relative;
+    left: 20%;
+}
+
+.brushes button:nth-of-type(1):after {
+    height: 4px;
+}
+
+.brushes button:nth-of-type(2):after {
+    height: 5px;
+}
+
+.brushes button:nth-of-type(3):after {
+    height: 8px;
+}
+
+.brushes button:nth-of-type(4):after {
+    height: 12px;
+}
+
+.brushes button:nth-of-type(5):after {
+    height: 15px;
+}
+
+.buttons {
+    padding-top: 10px;
+    margin-top: 40px;
+    display: block;
+}
+
+.buttons button {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+    padding: 5px;
+    height: 40px;
+    border-radius: 20px;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.right-block {
+    width: 300px;
+    position: fixed;
+    top: 50%;
+    transform: translate(0,-50%);
+    right: 30px;
+}
+
+.right-block input{
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background-color: #ffffff;
+    height: 40px;
+    border-radius: 20px;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* var drButton = document.getElementById('ent');
+    // drButton.addEventListener('click', function(){
+    //   var drCode = document.getElementById('entcode');
+    //   var str = drCode.value.split(";");
+    //   reset();
+    //   ctx.lineWidth = 5;
+    //   ctx.beginPath();
+    //   ctx.moveTo(10, str[0]);
+    //   for(var i = 0; i<str.length;i++)
+    //   {
+    //     ctx.lineTo(10, str[i]);
+    //   }
+    //   ctx.stroke();
+    //   alert("done");
+    // }); */
+
+.color {
+    position: fixed;
+    width: 350px;
+    left: 50%;
+    transform: translate(-50%,0);
+    top: 10px;
+}
+.color .buttons {
+    margin: 0px;
+}
+.color .buttons button{
+    width: 160px;
+    display: inline-block;
+    border: 2px solid #000;
+}
+
+.buttons button:hover {
+    background: #000;
+    color: #fff;
+}
+
+button:hover {
+    background: #000;
+    color: #fff;
+}
+.brushes button:hover:after {
+    background: #fff;
+}
+
+* {
+    transition: all 0.5s ease;
+}
