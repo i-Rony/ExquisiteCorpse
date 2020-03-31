@@ -126,18 +126,22 @@ window.onload = function () {
       a.href = canvasDataURL;
       a.download = 'drawing' + savecount++;
       a.click();
-
-      var str = "";
-      var imgData = ctx.getImageData(0, 420, 600, 1);
-      var i;
-      for (i = 0; i < imgData.data.length; i += 4) {
-        if(imgData.data[i] == 0)
-          str = str + (i/4) + ";"
-        //imgData.data[i+1] = 0
-        //imgData.data[i+2] = 0
+      var cue = [];
+      for(var c=420;c<440;c++)
+      {
+        var str = "";
+        var imgData = ctx.getImageData(0, c, 600, 1);
+        var i;
+        for (i = 0; i < imgData.data.length; i += 4) {
+          if(imgData.data[i] == 0)
+            str = str + (i/4) + ";"
+          //imgData.data[i+1] = 0
+          //imgData.data[i+2] = 0
+        }
+        cue.push(str);
       }
       var genCode = document.getElementById('gencode');
-      genCode.value = str;
+      genCode.value = cue.join("@");
       genCode.select();
       genCode.setSelectionRange(0, 99999);
       document.execCommand("copy")
@@ -147,18 +151,23 @@ window.onload = function () {
     var drButton = document.getElementById('ent');
     drButton.addEventListener('click', function(){
       var drCode = document.getElementById('entcode');
-      var str = drCode.value.split(";");
+      var cue = drCode.value.split("@");
       reset();
       var def = ctx.lineWidth;
-      ctx.lineWidth = 5;
-      ctx.beginPath();
-      ctx.moveTo(str[0], 20);
-      for(var i = 0; i<str.length-1;i++)
+      ctx.lineWidth = 1;
+
+      for(var c = 0; c < 20; c++)
       {
-        ctx.lineTo(str[i], 20);
-        ctx.moveTo(str[i+1]-1, 20);
+        var str = cue[c].split(';');
+        ctx.beginPath();
+        ctx.moveTo(str[0], c);
+        for(var i = 0; i<str.length-1;i++)
+        {
+          ctx.lineTo(str[i], c);
+          ctx.moveTo(str[i+1]-1, c);
+        }
+        ctx.stroke();
       }
-      ctx.stroke();
       ctx.lineWidth = def;
      // alert(str[0]);
     });
