@@ -3,6 +3,7 @@ window.onload = function () {
   
     // Definitions
     var imgarray = [];
+    var savecount = 0;
     var savedHash;
     var genButton = document.getElementById('gen');
     var undoButton = document.getElementById('undo');
@@ -140,6 +141,11 @@ window.onload = function () {
     
 
     genButton.addEventListener('click', function(){
+      var canvasDataURL = canvas.toDataURL();
+      var a = document.createElement('a');
+      a.href = canvasDataURL;
+      a.download = 'drawing' + savecount++;
+      a.click();
       var cue = [];
       for(var c=420;c<440;c++)
       {
