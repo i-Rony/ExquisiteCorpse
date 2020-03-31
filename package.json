@@ -1,0 +1,24 @@
+{
+  "name": "exquisitecorpse",
+  "version": "1.0.0",
+  "description": "a web app which allows people to play the surrealist game exquisite corpse over the internet",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RollingThunderSagnik/ExquisiteCorpse.git"
+  },
+  "author": "Sagnik Ganguly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RollingThunderSagnik/ExquisiteCorpse/issues"
+  },
+  "homepage": "https://github.com/RollingThunderSagnik/ExquisiteCorpse#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}

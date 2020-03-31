@@ -1,3 +1,4 @@
+var socket = io();
 window.onload = function () {
   var imgarray = [];
   var savecount = 0;
@@ -93,39 +94,24 @@ window.onload = function () {
       isDrawing = false;
     });
   
-    // Handle Mouse Coordinates
+    //mouse er scam
     function setMouseCoordinates(event) {
       mouseX = event.clientX - boundings.left;
       mouseY = event.clientY - boundings.top;
     }
-  
-    // Handle Clear Button
+
+    //clear the shite
     var clearButton = document.getElementById('clear');
-  
     clearButton.addEventListener('click', function(){
         reset();
     });
-
-    // colors.addEventListener('click', function(event) {
-    //   context.strokeStyle = event.target.value || 'black';
-    // });
-    // Handle Clear Button
     var undoButton = document.getElementById('undo');
   
     undoButton.addEventListener('click', function(){
-       // if(imgarray.length != 0)
           ctx.putImageData(imgarray.pop(), 0, 0);
-        //alert("hello");
     });
-  
-    // Handle Save Button
     var genButton = document.getElementById('gen');
     genButton.addEventListener('click', function(){
-      var canvasDataURL = canvas.toDataURL();
-      var a = document.createElement('a');
-      a.href = canvasDataURL;
-      a.download = 'drawing' + savecount++;
-      a.click();
       var cue = [];
       for(var c=420;c<440;c++)
       {
@@ -140,18 +126,12 @@ window.onload = function () {
         }
         cue.push(str);
       }
-      var genCode = document.getElementById('gencode');
-      genCode.value = cue.join("@");
-      genCode.select();
-      genCode.setSelectionRange(0, 99999);
-      document.execCommand("copy")
-     // alert("done");
+      socket.emit('cue', cue.join("@"));
     });
 
-    var drButton = document.getElementById('ent');
-    drButton.addEventListener('click', function(){
-      var drCode = document.getElementById('entcode');
-      var cue = drCode.value.split("@");
+    socket.on('cue',function(hash){
+      console.log("amio peyechi");
+      var cue = hash.split("@");
       reset();
       var def = ctx.lineWidth;
       ctx.lineWidth = 1;
@@ -169,8 +149,6 @@ window.onload = function () {
         ctx.stroke();
       }
       ctx.lineWidth = def;
-     // alert(str[0]);
     });
-    console.log(ctx.lineWidth);
-  };
+};
   
