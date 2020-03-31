@@ -1,17 +1,58 @@
 var socket = io();
 window.onload = function () {
-  var imgarray = [];
-  var savecount = 0;
-    // Definitions
-    var canvas = document.getElementById("halo");
-    var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, 600, 440);
-    var boundings = canvas.getBoundingClientRect();
   
-
+    // Definitions
+    var imgarray = [];
+    var savedHash;
+    var genButton = document.getElementById('gen');
+    var undoButton = document.getElementById('undo');
+    var clearButton = document.getElementById('clear');
     var brush = document.getElementById('brush');
     var eraser = document.getElementById('eraser');
+    var canvas = document.getElementById("halo");
+    var ctx = canvas.getContext("2d");
+    var boundings = canvas.getBoundingClientRect();
+  
+    function drawCue(hash){
+      var cue = hash.split("@");
+      
+      var def = ctx.lineWidth;
+      ctx.lineWidth = 1;
+
+      for(var c = 0; c < 20; c++)
+      {
+        var str = cue[c].split(';');
+        ctx.beginPath();
+        ctx.moveTo(str[0], c);
+        for(var i = 0; i<str.length-1;i++)
+        {
+          ctx.lineTo(str[i], c);
+          ctx.moveTo(str[i+1]-1, c);
+        }
+        ctx.stroke();
+      }
+      ctx.lineWidth = def;
+    }
+
+    function reset() {
+        setBrush();
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, 600, 440);
+        var def = ctx.lineWidth;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.setLineDash([5,6]);
+        ctx.moveTo(0, 420);
+        ctx.lineTo(600, 420);
+        ctx.moveTo(0, 20);
+        ctx.lineTo(600, 20);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.lineWidth = def;
+        if(savedHash)
+          drawCue(savedHash);
+    }
+    
     function setBrush(){
       ctx.strokeStyle = 'black';
       brush.style.color = 'white';
@@ -33,22 +74,8 @@ window.onload = function () {
     eraser.addEventListener('click', function(event) {
       setErase();
     });
-    function reset() {
-        setBrush();
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, 600, 440);
-        var def = ctx.lineWidth;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.setLineDash([5,6]);
-        ctx.moveTo(0, 420);
-        ctx.lineTo(600, 420);
-        ctx.moveTo(0, 20);
-        ctx.lineTo(600, 20);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.lineWidth = def;
-    }
+
+
 
     reset();
     // Specifications
@@ -101,16 +128,17 @@ window.onload = function () {
     }
 
     //clear the shite
-    var clearButton = document.getElementById('clear');
+    
     clearButton.addEventListener('click', function(){
         reset();
     });
-    var undoButton = document.getElementById('undo');
+    
   
     undoButton.addEventListener('click', function(){
           ctx.putImageData(imgarray.pop(), 0, 0);
     });
-    var genButton = document.getElementById('gen');
+    
+
     genButton.addEventListener('click', function(){
       var cue = [];
       for(var c=420;c<440;c++)
@@ -129,26 +157,11 @@ window.onload = function () {
       socket.emit('cue', cue.join("@"));
     });
 
+
     socket.on('cue',function(hash){
       console.log("amio peyechi");
-      var cue = hash.split("@");
+      savedHash = hash;
       reset();
-      var def = ctx.lineWidth;
-      ctx.lineWidth = 1;
-
-      for(var c = 0; c < 20; c++)
-      {
-        var str = cue[c].split(';');
-        ctx.beginPath();
-        ctx.moveTo(str[0], c);
-        for(var i = 0; i<str.length-1;i++)
-        {
-          ctx.lineTo(str[i], c);
-          ctx.moveTo(str[i+1]-1, c);
-        }
-        ctx.stroke();
-      }
-      ctx.lineWidth = def;
     });
 };
   
