@@ -5,7 +5,7 @@ window.onload = function () {
     var canvas = document.getElementById("halo");
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, 600, 400);
+    ctx.fillRect(0, 0, 600, 440);
     var boundings = canvas.getBoundingClientRect();
   
 
@@ -35,15 +35,15 @@ window.onload = function () {
     function reset() {
         setBrush();
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, 600, 420);
+        ctx.fillRect(0, 0, 600, 440);
         var def = ctx.lineWidth;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.setLineDash([5,6]);
-        ctx.moveTo(0, 410);
-        ctx.lineTo(600, 410);
-        ctx.moveTo(0, 10);
-        ctx.lineTo(600, 10);
+        ctx.moveTo(0, 420);
+        ctx.lineTo(600, 420);
+        ctx.moveTo(0, 20);
+        ctx.lineTo(600, 20);
         ctx.stroke();
         ctx.setLineDash([]);
         ctx.lineWidth = def;
@@ -128,7 +128,7 @@ window.onload = function () {
       a.click();
 
       var str = "";
-      var imgData = ctx.getImageData(0, 410, 600, 1);
+      var imgData = ctx.getImageData(0, 420, 600, 1);
       var i;
       for (i = 0; i < imgData.data.length; i += 4) {
         if(imgData.data[i] == 0)
@@ -152,15 +152,16 @@ window.onload = function () {
       var def = ctx.lineWidth;
       ctx.lineWidth = 5;
       ctx.beginPath();
-      ctx.moveTo(str[0], 10);
+      ctx.moveTo(str[0], 20);
       for(var i = 0; i<str.length-1;i++)
       {
-        ctx.lineTo(str[i], 10);
-        ctx.moveTo(str[i+1]-1, 10);
+        ctx.lineTo(str[i], 20);
+        ctx.moveTo(str[i+1]-1, 20);
       }
       ctx.stroke();
       ctx.lineWidth = def;
      // alert(str[0]);
     });
+    console.log(ctx.lineWidth);
   };
   

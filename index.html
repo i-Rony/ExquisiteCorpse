@@ -6,11 +6,8 @@
 <body>
 <div class="left-block">
     <div class="brushes">
-      <button type="button" value="4"></button>
-      <button type="button" value="5"></button>
-      <button type="button" value="8"></button>
-      <button type="button" value="12"></button>
-      <button type="button" value="15"></button>
+      Brush Size:
+      <input type="range" min="1" max="15" value="5" class="slider" id="myRange">
     </div>
     <div class="buttons">
       <button id="clear" type="button">Clear</button>
@@ -30,7 +27,7 @@
 </div>
 
 <div id="cont">
-    <canvas id="halo" width="600" height="420">
+    <canvas id="halo" width="600" height="440">
         Your browser does not support the HTML5 canvas tag.
         </canvas>
 </div>

@@ -39,51 +39,38 @@ body {
 
 .brushes {
     padding-top: 5px;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-family: 'Arial';
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #ffffff;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 4px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    cursor: pointer;
+    border-radius: 10px;
 }
   
-.brushes button {
-    display: block;
-    width: 100%;
-    border: 0;
-    border-radius: 0;
-    background-color: #ffffff;
-    margin-bottom: 10px;
-    padding: 5px;
-    height: 40px;
-    border-radius: 20px;
-    outline: none;
-    position: relative;
+.slider::-moz-range-thumb {
+    border-radius: 10px;
+    width: 20px;
+    height: 20x;
+    background: #ffffff;
     cursor: pointer;
-}
-
-.brushes button:after {
-    height: 1px;
-    display: block;
-    background: #333;
-    content: '';
-    width: 60%;
-    position: relative;
-    left: 20%;
-}
-
-.brushes button:nth-of-type(1):after {
-    height: 4px;
-}
-
-.brushes button:nth-of-type(2):after {
-    height: 5px;
-}
-
-.brushes button:nth-of-type(3):after {
-    height: 8px;
-}
-
-.brushes button:nth-of-type(4):after {
-    height: 12px;
-}
-
-.brushes button:nth-of-type(5):after {
-    height: 15px;
 }
 
 .buttons {
@@ -131,21 +118,6 @@ body {
     text-align: center;
 }
 
-/* var drButton = document.getElementById('ent');
-    // drButton.addEventListener('click', function(){
-    //   var drCode = document.getElementById('entcode');
-    //   var str = drCode.value.split(";");
-    //   reset();
-    //   ctx.lineWidth = 5;
-    //   ctx.beginPath();
-    //   ctx.moveTo(10, str[0]);
-    //   for(var i = 0; i<str.length;i++)
-    //   {
-    //     ctx.lineTo(10, str[i]);
-    //   }
-    //   ctx.stroke();
-    //   alert("done");
-    // }); */
 
 .color {
     position: fixed;
@@ -171,9 +143,6 @@ body {
 button:hover {
     background: #000;
     color: #fff;
-}
-.brushes button:hover:after {
-    background: #fff;
 }
 
 * {
