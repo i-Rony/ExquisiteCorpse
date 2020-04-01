@@ -23,11 +23,25 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
     // console.log("hello");
     socket.on('disconnect',function(){
-        // console.log('user disconnected');
+        var sID = socket.id;
+        for(var i=0;i<rooms.length;i++)
+        {
+            var indexu = rooms[i]['players'].indexOf(sID);
+            if(indexu>=0)
+            { 
+                rooms[i]['strength'] = rooms[i]['strength'] - 1;
+                rooms[i]['players'].splice(indexu,1);
+                if(rooms[i]['strength'] == 0)
+                {
+                    rooms.indexOf(i,1);
+                }
+            }
+        }
     });
     socket.on('cue', function(imgData,rID,id){
         // console.log("peyechi");
         io.emit('cue',imgData,rID,id);
+        
     });
     socket.on('joinroom', function(roomID, socketID){
         
@@ -65,7 +79,7 @@ io.on('connection', function(socket){
                 io.emit('roomsuccess',roomID,socketID,false);
             }
         }
-        //console.log(rooms);
+        console.log(rooms);
     });
 });
 
