@@ -1,12 +1,19 @@
 body {
-    background: #40E0D0;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FF0080, #FF8C00, #40E0D0);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FF0080, #FF8C00, #40E0D0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    /* background: #40E0D0;  
+    background: -webkit-linear-gradient(to right, #FF0080, #FF8C00, #40E0D0);  
+    background: linear-gradient(to right, #FF0080, #FF8C00, #40E0D0);  */
     height: 100vh;
     width: 100vw;
     margin: 0px;
     padding: 0px;
     overflow-x: hidden;
+    background: #f953c6;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #b91d73, #f953c6);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #b91d73, #f953c6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #c31432;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 #cont {
     width: 700px;
@@ -103,20 +110,7 @@ body {
     right: 30px;
 }
 
-.right-block input{
-    display: block;
-    width: 100%;
-    border: 0;
-    border-radius: 0;
-    background-color: #ffffff;
-    height: 40px;
-    border-radius: 20px;
-    outline: none;
-    position: relative;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: center;
-}
+
 
 
 .color {
@@ -147,4 +141,59 @@ button:hover {
 
 * {
     transition: all 0.5s ease;
+}
+
+#pause{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    top: 0px;
+    opacity: 0;
+    z-index: -1;
+}
+#pause span{
+    position: relative;
+    top: 50%;
+    transform: translate(0,-50%);
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    width: 100vw;
+    display: block;
+}
+
+#mroom{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: #00d2ff;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3a7bd5, #00d2ff);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3a7bd5, #00d2ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    top: 0px;
+}
+#mroom .buttons{
+    position: relative;
+    left: 50vw;
+    top: 50vh;
+    transform: translate(-50%,-50%);
+    width: 400px;
+    display: block;
+    margin: 0px;
+}
+#mroom input{
+    display: block;
+    width: 400px;
+    border: 0;
+    border-radius: 0;
+    background-color: #ffffff;
+    height: 40px;
+    border-radius: 20px;
+    outline: none;
+    position: relative;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
 }

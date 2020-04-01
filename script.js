@@ -5,6 +5,7 @@ window.onload = function () {
     var imgarray = [];
     var savecount = 0;
     var savedHash;
+    var pauseBanner = document.getElementById('pause');
     var genButton = document.getElementById('gen');
     var undoButton = document.getElementById('undo');
     var clearButton = document.getElementById('clear');
@@ -12,8 +13,19 @@ window.onload = function () {
     var eraser = document.getElementById('eraser');
     var canvas = document.getElementById("halo");
     var ctx = canvas.getContext("2d");
-    var boundings = canvas.getBoundingClientRect();
-  
+    var roombox = document.getElementById("roomID");
+    var makeroom = document.getElementById("makeroom");
+    var roominterface = document.getElementById("mroom");
+    var roomID;
+    // defaults
+    var mouseX = 0;
+    var mouseY = 0;
+    ctx.lineWidth = 5; // initial brush width
+    var isDrawing = false;
+
+   
+    
+
     function drawCue(hash){
       var cue = hash.split("@");
       
@@ -53,14 +65,13 @@ window.onload = function () {
         if(savedHash)
           drawCue(savedHash);
     }
-    
     function setBrush(){
       ctx.strokeStyle = 'black';
       brush.style.color = 'white';
       brush.style.background = 'black';
 
       eraser.removeAttribute('style');
-    };
+    }
     function setErase(){
       ctx.strokeStyle = 'white';
       eraser.style.color = 'white';
@@ -69,6 +80,7 @@ window.onload = function () {
 
       brush.removeAttribute('style');
     }
+
     brush.addEventListener('click', function(event) {
       setBrush();
     });
@@ -79,62 +91,50 @@ window.onload = function () {
 
 
     reset();
-    // Specifications
-    var mouseX = 0;
-    var mouseY = 0;
-    ctx.strokeStyle = 'black'; // initial brush color
-    ctx.lineWidth = 5; // initial brush width
-    var isDrawing = false;
-  
+
+   
     // Handle Brushes
     var brushes = document.getElementsByClassName('brushes')[0];
-  
     brushes.addEventListener('click', function(event) {
       ctx.lineWidth = event.target.value || 5;
     });
-  
-    // Mouse Down Event
+    // start stroke
     canvas.addEventListener('mousedown', function(event) {
       var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       imgarray.push(imgData);
       console.log(imgarray.length);
       setMouseCoordinates(event);
       isDrawing = true;
-  
       // Start Drawing
       ctx.beginPath();
       ctx.moveTo(mouseX, mouseY);
     });
-  
-    // Mouse Move Event
+    // move
     canvas.addEventListener('mousemove', function(event) {
       setMouseCoordinates(event);
-  
       if(isDrawing){
         ctx.lineTo(mouseX, mouseY);
         ctx.stroke();
       }
     });
-  
-    // Mouse Up Event
+    // end stroke
     canvas.addEventListener('mouseup', function(event) {
       setMouseCoordinates(event);
       isDrawing = false;
     });
-  
     //mouse er scam
     function setMouseCoordinates(event) {
+      var boundings = canvas.getBoundingClientRect();
       mouseX = event.clientX - boundings.left;
       mouseY = event.clientY - boundings.top;
     }
 
+
+
     //clear the shite
-    
     clearButton.addEventListener('click', function(){
         reset();
     });
-    
-  
     undoButton.addEventListener('click', function(){
           ctx.putImageData(imgarray.pop(), 0, 0);
     });
@@ -160,14 +160,59 @@ window.onload = function () {
         }
         cue.push(str);
       }
-      socket.emit('cue', cue.join("@"));
+      socket.emit('cue', cue.join("@"),roomID,socket.id);
+      console.log(socket.id);
     });
 
+    
 
-    socket.on('cue',function(hash){
+    socket.on('cue',function(hash,rID,sID){
       console.log("amio peyechi");
-      savedHash = hash;
-      reset();
+      if(roomID == rID)
+      {
+        if(sID==socket.id)
+        {
+          pauseBanner.style.opacity = 1;
+          pauseBanner.style.zIndex = 1;
+        }
+        else
+        {
+          pauseBanner.style.opacity = 0;
+          pauseBanner.style.zIndex = -1;
+          savedHash = hash;
+          reset();
+        }
+      }
+    });
+
+    makeroom.addEventListener('click', function(){
+      socket.emit('joinroom', roombox.value, socket.id);
+    });
+
+    socket.on('roomfull', function(id){
+      if(id == socket.id)
+        alert("room full");
+    });
+
+    socket.on('roomsuccess', function(rID,id,flag){
+      if(id == socket.id)
+      { 
+        roomID = rID;
+        roominterface.style.opacity = 0;
+        roominterface.style.zIndex = -1;
+        if(flag)
+        {
+          pauseBanner.style.opacity = 0;
+          pauseBanner.style.zIndex = -1;
+        }
+        else
+        {
+          pauseBanner.style.opacity = 1;
+          pauseBanner.style.zIndex = 1;
+          savedHash = hash;
+          reset();
+        }
+      }
     });
 };
   
