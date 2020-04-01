@@ -33,10 +33,11 @@ io.on('connection', function(socket){
                 rooms[i]['players'].splice(indexu,1);
                 if(rooms[i]['strength'] == 0)
                 {
-                    rooms.indexOf(i,1);
+                    rooms.splice(i,1);
                 }
             }
         }
+        console.log(rooms);
     });
     socket.on('cue', function(imgData,rID,id){
         // console.log("peyechi");
