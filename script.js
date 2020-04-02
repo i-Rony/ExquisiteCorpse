@@ -3,7 +3,6 @@ window.onload = function () {
   
     // Definitions
     var imgarray = [];
-    var savecount = 0;
     var savedHash;
     var pauseBanner = document.getElementById('pause');
     var genButton = document.getElementById('gen');
@@ -16,6 +15,9 @@ window.onload = function () {
     var roombox = document.getElementById("roomID");
     var makeroom = document.getElementById("makeroom");
     var roominterface = document.getElementById("mroom");
+    var saviorvi = document.getElementById("saveit");
+    var picasso = document.getElementById("downs");
+    var kesto = document.getElementById("final").getContext("2d");;
     var roomID;
     // defaults
     var mouseX = 0;
@@ -30,7 +32,7 @@ window.onload = function () {
       var cue = hash.split("@");
       
       var def = ctx.lineWidth;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 2;
 
       for(var c = 0; c < 20; c++)
       {
@@ -51,17 +53,6 @@ window.onload = function () {
         setBrush();
         ctx.fillStyle = "#FFFFFF";
         ctx.fillRect(0, 0, 600, 440);
-        var def = ctx.lineWidth;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.setLineDash([5,6]);
-        ctx.moveTo(0, 420);
-        ctx.lineTo(600, 420);
-        ctx.moveTo(0, 20);
-        ctx.lineTo(600, 20);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.lineWidth = def;
         if(savedHash)
           drawCue(savedHash);
     }
@@ -102,7 +93,7 @@ window.onload = function () {
     canvas.addEventListener('mousedown', function(event) {
       var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       imgarray.push(imgData);
-      console.log(imgarray.length);
+      //console.log(imgarray.length);
       setMouseCoordinates(event);
       isDrawing = true;
       // Start Drawing
@@ -142,10 +133,6 @@ window.onload = function () {
 
     genButton.addEventListener('click', function(){
       var canvasDataURL = canvas.toDataURL();
-      var a = document.createElement('a');
-      a.href = canvasDataURL;
-      a.download = 'drawing' + savecount++;
-      a.click();
       var cue = [];
       for(var c=420;c<440;c++)
       {
@@ -160,14 +147,40 @@ window.onload = function () {
         }
         cue.push(str);
       }
-      socket.emit('cue', cue.join("@"),roomID,socket.id);
-      console.log(socket.id);
+      socket.emit('cue', cue.join("@"),roomID,socket.id,canvasDataURL);
     });
 
-    
+    saviorvi.addEventListener('click', function(){
+      var canvasDataURL = canvas.toDataURL();
+      socket.emit('cue', ';',roomID,socket.id,canvasDataURL);
+      socket.emit('sesh', roomID);
+    });
+
+
+    socket.on('sesh',function(rID,images){
+      if(roomID == rID)
+      {
+        document.getElementsByTagName("body")[0].style.overflowY = 'scroll';
+        picasso.style.left = "0px"; 
+        document.getElementById("final").height = 420*images.length;
+        
+        for(var i=0;i<images.length;i++)
+        {
+          var image = new Image();
+          image.onload = function() {
+            for(var j=0;j<images.length;j++)
+            {
+                if(image.src = images[j])
+                  kesto.drawImage(image, 0, 420*j);
+            }
+          };
+          image.src = images[i];
+        }
+      }
+    });
 
     socket.on('cue',function(hash,rID,sID){
-      console.log("amio peyechi");
+      //console.log("amio peyechi");
       if(roomID == rID)
       {
         if(sID==socket.id)
@@ -181,6 +194,9 @@ window.onload = function () {
           pauseBanner.style.zIndex = -1;
           savedHash = hash;
           reset();
+          imgarray = [];
+          var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          imgarray.push(imgData);
         }
       }
     });
@@ -209,8 +225,6 @@ window.onload = function () {
         {
           pauseBanner.style.opacity = 1;
           pauseBanner.style.zIndex = 1;
-          savedHash = hash;
-          reset();
         }
       }
     });

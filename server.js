@@ -9,7 +9,8 @@ var rooms = [];
  room = {
      'room id' : 12345,
      'strength : 2,
-     'players' : []
+     'players' : [],
+     'images' : []
  }
 */
 
@@ -37,13 +38,35 @@ io.on('connection', function(socket){
                 }
             }
         }
-        console.log(rooms);
+        //console.log(rooms);
     });
-    socket.on('cue', function(imgData,rID,id){
-        // console.log("peyechi");
+
+
+    socket.on('cue', function(imgData,rID,id,bessa){
         io.emit('cue',imgData,rID,id);
-        
+       //rooms[rID]['images'].push(bessa);
+        for(var i=0;i<rooms.length;i++)
+        {
+            if(rooms[i]['room ID'] == rID)
+             {   
+                 rooms[i]['images'].push(bessa);
+                 break;
+             }
+        }
+        //console.log(rooms);
     });
+
+    socket.on('sesh', function(roomID){
+        for(var i=0;i<rooms.length;i++)
+        {
+            if(rooms[i]['room ID'] == roomID)
+             {   
+                 io.emit('sesh',roomID,rooms[i]['images']);
+                 //console.log(rooms[i]['images'][0]);
+             }
+        }
+    });
+
     socket.on('joinroom', function(roomID, socketID){
         
         var f=true;
@@ -63,7 +86,8 @@ io.on('connection', function(socket){
             var newroom = {
                 'room ID' : roomID,
                 'strength' : 1,
-                'players' : [socketID]
+                'players' : [socketID],
+                'images' : []
             }
             rooms.push(newroom);
             io.emit('roomsuccess',roomID,socketID,true);
@@ -80,7 +104,7 @@ io.on('connection', function(socket){
                 io.emit('roomsuccess',roomID,socketID,false);
             }
         }
-        console.log(rooms);
+        //console.log(rooms);
     });
 });
 
