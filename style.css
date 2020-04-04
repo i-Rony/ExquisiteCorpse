@@ -277,3 +277,24 @@ button:hover {
         z-index: -1;
     }
 }
+.arrows {
+    background: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: block;
+    text-align: center;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+.arrows i {
+    width: 40px;
+    border-radius: 20px;
+    display: block;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translate(0,-50%);
+}

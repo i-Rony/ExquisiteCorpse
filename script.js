@@ -20,6 +20,19 @@ window.onload = function () {
     var kesto = document.getElementById("final").getContext("2d");
     var roomID;
     var mobguard = document.getElementById("mobile");
+    var tolon = document.getElementById("tolon");
+
+    var tash = document.getElementById("cont");
+    var namon = document.getElementById("namon");
+
+    tolon.addEventListener("click", function(){
+      tash.style.top = (tash.offsetTop-15) + "px";
+    });
+    namon.addEventListener("click", function(){
+      tash.style.top = (tash.offsetTop+15) + "px";
+    });
+
+
     // defaults
     var mouseX = 0;
     var mouseY = 0;
@@ -59,7 +72,7 @@ window.onload = function () {
     function reset() {
         setBrush();
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, 600, 340);
+        ctx.fillRect(0, 0, 600, 440);
         if(savedHash)
           drawCue(savedHash);
     }
@@ -96,6 +109,8 @@ window.onload = function () {
     
     
     if(!isMobile){
+      tolon.remove();
+      namon.remove();
     mobguard.remove();
     brushes.addEventListener('click', function(event) {
       ctx.lineWidth = event.target.value || 5;
@@ -115,7 +130,7 @@ window.onload = function () {
     document.getElementsByTagName("body")[0].addEventListener('mousemove', function(event) {
       setMouseCoordinates(event);
       //console.log(mouseX,mouseY);
-      if(mouseX>600 || mouseY>340 || mouseX<0 || mouseY<0)
+      if(mouseX>600 || mouseY>440 || mouseX<0 || mouseY<0)
         isDrawing=false;
     });
     
@@ -151,7 +166,7 @@ window.onload = function () {
     document.getElementsByTagName("body")[0].addEventListener('touchmove', function(event) {
       setTouchCoordinates(event);
       console.log(mouseX,mouseY);
-      if(mouseX>600 || mouseY>340 || mouseX<0 || mouseY<0)
+      if(mouseX>600 || mouseY>440 || mouseX<0 || mouseY<0)
         isDrawing=false;
     });
     
@@ -197,7 +212,7 @@ window.onload = function () {
       {
         var canvasDataURL = canvas.toDataURL();
         var cue = [];
-        for(var c=320;c<340;c++)
+        for(var c=420;c<440;c++)
         {
           var str = "";
           var imgData = ctx.getImageData(0, c, 600, 1);
@@ -227,7 +242,7 @@ window.onload = function () {
       {
         document.getElementsByTagName("body")[0].style.overflowY = 'scroll';
         picasso.style.zIndex = 3; 
-        document.getElementById("final").height = 320*images.length;
+        document.getElementById("final").height = 420*images.length;
         
         for(var i=0;i<images.length;i++)
         {
@@ -236,7 +251,7 @@ window.onload = function () {
             for(var j=0;j<images.length;j++)
             {
                 if(image.src = images[j])
-                  kesto.drawImage(image, 0, 320*j);
+                  kesto.drawImage(image, 0, 420*j);
             }
           };
           image.src = images[i];
