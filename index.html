@@ -14,50 +14,55 @@
        return true;
     }
 </script>
+<div id="ashol" class="ful2">
+  <div class="left-block">
+      <div class="brushes">
+        Brush Size:
+        <input type="range" min="1" max="15" value="5" class="slider" id="myRange">
+      </div>
+      <div class="buttons">
+        <button id="clear" type="button">Clear</button>
+        <button id="undo" type="button">Undo</button>
+      </div>
+  </div>
+  
 
-<div class="left-block">
-    <div class="brushes">
-      Brush Size:
-      <input type="range" min="1" max="15" value="5" class="slider" id="myRange">
-    </div>
+  <div id="cont">
+      <canvas id="halo" width="600" height="440">
+          Your browser does not support the HTML5 canvas tag.
+      </canvas>
+      <hr class="cuemark">
+      <hr class="cuemark" style="top: 420px;">
+  </div>
+  <div class="right-block">
     <div class="buttons">
-      <button id="clear" type="button">Clear</button>
-      <button id="undo" type="button">Undo</button>
+      <button id="gen" type="button">I'm done, pass the paper</button>
+      <button id="saveit" type="button">Download</button>
     </div>
-</div>
-<div class="right-block">
-  <div class="buttons">
-    <button id="gen" type="button">I'm done, pass the paper</button>
-    <button id="saveit" type="button">Download</button>
+  </div>
+  <div class="color">
+    <div class="buttons">
+      <button id="eraser" type="button">Eraser</button>
+      <button id="brush" type="button">Brush</button>
+    </div>
   </div>
 </div>
-
-<div id="cont">
-    <canvas id="halo" width="600" height="440">
-        Your browser does not support the HTML5 canvas tag.
-    </canvas>
-    <hr class="cuemark">
-    <hr class="cuemark" style="top: 420px;">
-</div>
-<div class="color">
-  <div class="buttons">
-    <button id="eraser" type="button">Eraser</button>
-    <button id="brush" type="button">Brush</button>
-  </div>
-</div>
-<div id="mroom">
+<div id="mroom" class="ful2">
   <div class="buttons">
     <input type="text" id="roomID" placeholder="room id here" onkeypress="return isNumberKey(event)"  >
     <button id="makeroom" type="button">Create/Join Room</button>
   </div>
 </div>
-<div id="pause">
+<div id="pause" class="ful2">
   <span>Wait, the other player is drawing....</span>
 </div>
-<div id="downs">
+<div id="downs" class="ful2">
   <canvas id="final" width="600" height="440">
     Your browser does not support the HTML5 canvas tag.
   </canvas>
+</div>
+<div id="mobile" class="ful2">
+  <span>rotate your phone</span>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="script.js"></script> 

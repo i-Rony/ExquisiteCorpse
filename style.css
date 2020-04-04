@@ -7,14 +7,25 @@ body {
     margin: 0px;
     padding: 0px;
     overflow-x: hidden;
-    background: #f953c6;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #b91d73, #f953c6);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top, #b91d73, #f953c6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: #c31432;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to top, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to top, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     overflow-y: hidden;
 }
+.ful2{
+    position: fixed;
+    width: 100vw !important;
+}
+#ashol {
+    background: #c31432;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: block;
+}
+
 #cont {
     width: 700px;
     max-height: 700px;
@@ -48,11 +59,12 @@ body {
 }
 
 .left-block {
-    width: 160px;
+    width: 300px;
+    max-width: calc((100vw - 600px) / 2 - 25px);
     position: fixed;
     top: 50%;
-    transform: translate(0,-50%);
-    left: 50px;
+    transform: translate(-50%,-50%);
+    left: calc((100vw - 600px) / 4);
 }
 
 
@@ -115,10 +127,11 @@ body {
 
 .right-block {
     width: 300px;
+    max-width: calc((100vw - 600px) / 2 - 25px);
     position: fixed;
     top: 50%;
-    transform: translate(0,-50%);
-    right: 30px;
+    transform: translate(50%,-50%);
+    right: calc((100vw - 600px) / 4);
 }
 
 .left-block .buttons {
@@ -129,10 +142,15 @@ body {
 
 .color {
     position: fixed;
-    width: 350px;
-    left: 50%;
-    transform: translate(-50%,0);
+    width: calc((100vw - 600px) / 2 - 25px);
+    right: 50vw;
+    transform: translate(50%,0);
     top: 10px;
+}
+@media only screen and (max-height: 600px) {
+    .color {
+        right: calc((100vw - 600px) / 4);
+    }
 }
 .color .buttons {
     margin: 0px;
@@ -140,7 +158,6 @@ body {
 .color .buttons button{
     width: 160px;
     display: inline-block;
-    border: 2px solid #000;
 }
 
 .buttons button:hover {
@@ -213,12 +230,11 @@ button:hover {
 }
 
 #downs{
-    left: 100vw;
     position: absolute;
     width: 100vw;
     min-height: 100vh;
     top: 0px;
-    z-index: 99;
+    z-index: -9;
     background: #e96443;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #904e95, #e96443);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #904e95, #e96443); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -233,4 +249,31 @@ button:hover {
     border-radius: 10px;
     top: 50px;
     margin-bottom: 50px;
+}
+
+#mobile{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,1);
+    top: 0px;
+}
+#mobile span{
+    position: relative;
+    top: 50%;
+    transform: translate(0,-50%);
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 5rem;
+    font-weight: bold;
+    text-align: center;
+    width: 100vw;
+    display: block;
+}
+
+@media only screen and (min-aspect-ratio: 1/1 ) {
+    #mobile{
+        opacity: 0;
+        z-index: -1;
+    }
 }
