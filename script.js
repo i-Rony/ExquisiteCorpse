@@ -24,7 +24,7 @@ window.onload = function () {
     var mouseY = 0;
     ctx.lineWidth = 5; // initial brush width
     var isDrawing = false;
-
+    var myTurn = true;
    
     
 
@@ -101,6 +101,13 @@ window.onload = function () {
       ctx.moveTo(mouseX, mouseY);
     });
     // move
+    document.getElementsByTagName("body")[0].addEventListener('mousemove', function(event) {
+      setMouseCoordinates(event);
+      console.log(mouseX,mouseY);
+      if(mouseX>600 || mouseY>440 || mouseX<0 || mouseY<0)
+        isDrawing=false;
+    });
+    
     canvas.addEventListener('mousemove', function(event) {
       setMouseCoordinates(event);
       if(isDrawing){
@@ -132,22 +139,26 @@ window.onload = function () {
     
 
     genButton.addEventListener('click', function(){
-      var canvasDataURL = canvas.toDataURL();
-      var cue = [];
-      for(var c=420;c<440;c++)
+      if(myTurn)
       {
-        var str = "";
-        var imgData = ctx.getImageData(0, c, 600, 1);
-        var i;
-        for (i = 0; i < imgData.data.length; i += 4) {
-          if(imgData.data[i] == 0)
-            str = str + (i/4) + ";"
-          //imgData.data[i+1] = 0
-          //imgData.data[i+2] = 0
+        var canvasDataURL = canvas.toDataURL();
+        var cue = [];
+        for(var c=420;c<440;c++)
+        {
+          var str = "";
+          var imgData = ctx.getImageData(0, c, 600, 1);
+          var i;
+          for (i = 0; i < imgData.data.length; i += 4) {
+            if(imgData.data[i] == 0)
+              str = str + (i/4) + ";"
+            //imgData.data[i+1] = 0
+            //imgData.data[i+2] = 0
+          }
+          cue.push(str);
         }
-        cue.push(str);
+        socket.emit('cue', cue.join("@"),roomID,socket.id,canvasDataURL);
       }
-      socket.emit('cue', cue.join("@"),roomID,socket.id,canvasDataURL);
+      myTurn = false;
     });
 
     saviorvi.addEventListener('click', function(){
@@ -197,6 +208,7 @@ window.onload = function () {
           imgarray = [];
           var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
           imgarray.push(imgData);
+          myTurn = true;
         }
       }
     });
