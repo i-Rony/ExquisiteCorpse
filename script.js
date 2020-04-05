@@ -48,6 +48,8 @@ window.onload = function () {
     var isMobile = window.mobilecheck();
     console.log(isMobile);    
 
+    
+
     function drawCue(hash){
       var cue = hash.split("@");
       

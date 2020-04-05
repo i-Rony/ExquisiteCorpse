@@ -108,4 +108,4 @@ io.on('connection', function(socket){
     });
 });
 
-http.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+http.listen(PORT, () => console.log(`Listening on ${ PORT }`));
