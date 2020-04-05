@@ -1,6 +1,6 @@
 {
   "short_name": "Exquisite Corpse",
-  "name": "Exquisite Corpse : Surrealist Game",
+  "name": "Exquisite Corpse",
   "description": "hi lvl danger surrealist game",
   "icons": [
     {
@@ -15,9 +15,9 @@
     }
   ],
   "start_url": "/?source=pwa",
-  "background_color": "#c31432",
+  "background_color": "#00aeff",
   "display": "fullscreen",
   "orientation": "landscape",
   "scope": "/",
-  "theme_color": "#240b36"
+  "theme_color": "#3a7bd5"
 }
