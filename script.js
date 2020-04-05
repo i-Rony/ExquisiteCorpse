@@ -256,7 +256,14 @@ window.onload = function () {
           };
           image.src = images[i];
         }
+
+        var canvasDataURL = document.getElementById("final").toDataURL();
+        var a = document.createElement('a');
+        a.href = canvasDataURL;
+        a.download = 'drawing' + roomID;
+        a.click();
       }
+      
     });
 
     socket.on('cue',function(hash,rID,sID){
