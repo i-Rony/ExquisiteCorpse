@@ -7,7 +7,7 @@ var io = require('socket.io')(http);
 var rooms = [];
 /*
  room = {
-     'room id' : 12345,
+     'room ID' : 12345,
      'strength : 2,
      'players' : [],
      'images' : []
@@ -31,6 +31,8 @@ io.on('connection', function(socket){
             if(indexu>=0)
             { 
                 rooms[i]['strength'] = rooms[i]['strength'] - 1;
+                io.emit('strength', rooms[i]['room ID'], rooms[i]['strength']);
+                //console.log(rooms[i]['room ID']);
                 rooms[i]['players'].splice(indexu,1);
                 if(rooms[i]['strength'] == 0)
                 {
@@ -38,7 +40,6 @@ io.on('connection', function(socket){
                 }
             }
         }
-        //console.log(rooms);
     });
 
 
@@ -91,6 +92,7 @@ io.on('connection', function(socket){
             }
             rooms.push(newroom);
             io.emit('roomsuccess',roomID,socketID,true);
+            io.emit('strength', roomID, 1);
         }
         else
         {
@@ -102,6 +104,7 @@ io.on('connection', function(socket){
                 rooms[indu]['strength']=2;
                 rooms[indu]['players'].push(socketID);
                 io.emit('roomsuccess',roomID,socketID,false);
+                io.emit('strength', roomID, 2);
             }
         }
         //console.log(rooms);

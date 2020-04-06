@@ -67,12 +67,16 @@ body {
     left: calc((100vw - 600px) / 4);
 }
 
-
-.brushes {
-    padding-top: 5px;
+.left-block, .right-block {
     color: #ffffff;
     font-size: 1.5rem;
     font-family: 'Arial';
+}
+#gen {
+    margin-top: 40px;
+}
+.brushes {
+    padding-top: 5px;
 }
 
 .slider {

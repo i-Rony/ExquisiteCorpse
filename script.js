@@ -1,9 +1,13 @@
 var socket = io();
 window.onload = function () {
-  
+
+  window.scrollTo(0, 0);
     // Definitions
     var imgarray = [];
     var savedHash;
+
+    var boudi = document.getElementsByTagName("body")[0];
+    boudi.scrollTo(0, 0);
     var pauseBanner = document.getElementById('pause');
     var genButton = document.getElementById('gen');
     var undoButton = document.getElementById('undo');
@@ -24,6 +28,7 @@ window.onload = function () {
 
     var tash = document.getElementById("cont");
     var namon = document.getElementById("namon");
+
 
     tolon.addEventListener("click", function(){
       tash.style.top = (tash.offsetTop-15) + "px";
@@ -48,7 +53,6 @@ window.onload = function () {
     var isMobile = window.mobilecheck();
     console.log(isMobile);    
 
-    
 
     function drawCue(hash){
       var cue = hash.split("@");
@@ -129,7 +133,7 @@ window.onload = function () {
       ctx.moveTo(mouseX, mouseY);
     });
     // move
-    document.getElementsByTagName("body")[0].addEventListener('mousemove', function(event) {
+    boudi.addEventListener('mousemove', function(event) {
       setMouseCoordinates(event);
       //console.log(mouseX,mouseY);
       if(mouseX>600 || mouseY>440 || mouseX<0 || mouseY<0)
@@ -165,7 +169,7 @@ window.onload = function () {
       ctx.moveTo(mouseX, mouseY);
     });
     // move
-    document.getElementsByTagName("body")[0].addEventListener('touchmove', function(event) {
+    boudi.addEventListener('touchmove', function(event) {
       setTouchCoordinates(event);
       console.log(mouseX,mouseY);
       if(mouseX>600 || mouseY>440 || mouseX<0 || mouseY<0)
@@ -239,31 +243,56 @@ window.onload = function () {
     });
 
 
+    function loadImage(url) {
+      return new  Promise(resolve => {
+          const image = new Image();
+          image.addEventListener('load', () => {
+              resolve(image);
+          });
+          image.src = url; 
+      });
+    }
+
+    function loadImage(url,i) {
+      return new  Promise(resolve => {
+          const image = new Image();
+          image.addEventListener('load', () => {
+              resolve({'chobi' : image, 'index' : i});
+          });
+          image.src = url; 
+      });
+    }
+    
+    
     socket.on('sesh',function(rID,images){
       if(roomID == rID)
       {
-        document.getElementsByTagName("body")[0].style.overflowY = 'scroll';
+        boudi.style.overflowY = 'scroll';
         picasso.style.zIndex = 3; 
         document.getElementById("final").height = 420*images.length;
         
         for(var i=0;i<images.length;i++)
         {
-          var image = new Image();
-          image.onload = function() {
-            for(var j=0;j<images.length;j++)
-            {
-                if(image.src = images[j])
-                  kesto.drawImage(image, 0, 420*j);
-            }
-          };
-          image.src = images[i];
+          loadImage(images[i],i)
+              .then(out=>{
+                
+                kesto.drawImage(out['chobi'], 0, 420*out['index']); 
+                if(out['index']==images.length-1)
+                {
+                  var canvasDataURL = document.getElementById("final").toDataURL();
+                  var a = document.createElement('a');
+                  a.href = canvasDataURL;
+                  a.download = 'drawing' + roomID;
+                  a.click();
+                }
+          });
         }
 
-        var canvasDataURL = document.getElementById("final").toDataURL();
-        var a = document.createElement('a');
-        a.href = canvasDataURL;
-        a.download = 'drawing' + roomID;
-        a.click();
+        // var canvasDataURL = document.getElementById("final").toDataURL();
+        // var a = document.createElement('a');
+        // a.href = canvasDataURL;
+        // a.download = 'drawing' + roomID;
+        // a.click();
       }
       
     });
@@ -292,6 +321,7 @@ window.onload = function () {
     });
 
     makeroom.addEventListener('click', function(){
+      if(roombox.value)
       socket.emit('joinroom', roombox.value, socket.id);
     });
 
@@ -319,7 +349,10 @@ window.onload = function () {
       }
     });
 
-    
+    socket.on('strength', function(rID,num){
+      if(rID == roomID)
+        document.getElementById("kkr").innerHTML = num;
+    });
     
 };
   
