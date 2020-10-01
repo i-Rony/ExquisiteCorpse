@@ -7,11 +7,15 @@ body {
     margin: 0px;
     padding: 0px;
     overflow-x: hidden;
-    background: #c31431;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #240b36, #c31431);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top, #240b36, #c31431); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    background:#33813C;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #3381BF, #D45E81);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #3381BF,  #D45E81); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     overflow-y: hidden;
 }
+
+/*you should add easter eggs*/
 .ful2{
     position: fixed;
     width: 100vw !important;
